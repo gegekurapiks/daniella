@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Daniella — Last Night on Earth</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Classic Vintage Serif & Script Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#F5EFE4',
+                        paperSheet: '#FAF6EE',
+                        ink: '#2B211D',
+                        sepia: '#6E6058',
+                        maroon: '#7C2D2D',
+                        maroonDark: '#591D1D',
+                        brass: '#B89658',
+                        borderWarm: '#DCD0BC'
+                    },
+                    fontFamily: {
+                        display: ['"Playfair Display"', 'serif'],
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        body: ['"Lora"', 'serif'],
+                        hand: ['"Caveat"', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Warm Parchment Background & Subtle Vignette */
+        body {
+            background-color: #F5EFE4;
+            background-image: radial-gradient(circle at 50% 38%, #FAF6EE 0%, #E8DEC9 100%);
+            color: #2B211D;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Subtle Paper Grain Texture */
+        .paper-sheet {
+            background-color: #FAF6EE;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            box-shadow: 0 20px 50px rgba(43, 33, 29, 0.10), 0 3px 12px rgba(43, 33, 29, 0.05);
+        }
+
+        /* Floating Dust Motes */
+        .dust-mote {
+            position: fixed;
+            border-radius: 9999px;
+            background: rgba(184, 150, 88, 0.28);
+            pointer-events: none;
+            animation: floatMote 11s ease-in-out infinite;
+        }
+
+        @keyframes floatMote {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.25; }
+            50% { transform: translateY(-22px) translateX(10px); opacity: 0.65; }
+        }
+
+        /* Stage 1: Standing Vintage Mailbox */
+        .mailbox-stage {
+            perspective: 1000px;
+        }
+
+        .mailbox-flag {
+            transform-origin: bottom center;
+            transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: rotate(0deg);
+        }
+
+        .mailbox-opened .mailbox-flag {
+            transform: rotate(-82deg);
+        }
+
+        .mailbox-door {
+            transform-origin: bottom center;
+            transition: transform 0.75s cubic-bezier(0.34, 1.36, 0.64, 1);
+        }
+
+        .mailbox-opened .mailbox-door {
+            transform: rotateX(-115deg);
+        }
+
+        .mailbox-envelope-peek {
+            transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.45s ease;
+            transform: translateY(8px) scale(0.9);
+            opacity: 0;
+        }
+
+        .mailbox-opened .mailbox-envelope-peek {
+            transform: translateY(-22px) scale(1.06);
+            opacity: 1;
+        }
+
+        /* Stage 2: Wax-Sealed Envelope */
+        .envelope-flap {
+            transform-origin: top center;
+            transition: transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+            clip-path: polygon(0 0, 100% 0, 50% 62%);
+        }
+
+        .envelope-opened .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 5;
+        }
+
+        .wax-seal-btn {
+            transition: transform 0.35s ease, opacity 0.4s ease;
+        }
+
+        .envelope-opened .wax-seal-btn {
+            transform: translate(-50%, -50%) scale(0.82);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Stage 3: Polaroid & Washi Tape */
+        .polaroid-frame {
+            background: #FFFDF9;
+            box-shadow: 0 10px 26px rgba(43, 33, 29, 0.12), 0 1px 4px rgba(43, 33, 29, 0.08);
+            transform: rotate(-1.6deg);
+            transition: transform 0.35s ease;
+        }
+
+        .polaroid-frame:hover {
+            transform: rotate(0deg) scale(1.015);
+        }
+
+        .washi-tape {
+            background-color: rgba(214, 194, 158, 0.68);
+            box-shadow: 0 1px 2px rgba(43, 33, 29, 0.08);
+            backdrop-filter: blur(1px);
+        }
+
+        /* Fountain-Pen Typewriter Cursor */
+        .typing-cursor::after {
+            content: '|';
+            display: inline-block;
+            margin-left: 2px;
+            color: #7C2D2D;
+            font-weight: 400;
+            animation: blinkCursor 0.85s infinite;
+        }
+
+        @keyframes blinkCursor {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Vinyl Spin */
+        .vinyl-spin {
+            animation: spinVinyl 7s linear infinite;
+        }
+
+        @keyframes spinVinyl {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-up {
+            animation: fadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+    </style>
+</head>
+<body class="font-body antialiased selection:bg-maroon/20 selection:text-ink flex flex-col justify-between relative">
+
+    <!-- Subtle Ambient Dust Motes -->
+    <div aria-hidden="true" class="fixed inset-0 overflow-hidden pointer-events-none">
+        <span class="dust-mote w-1.5 h-1.5 top-[18%] left-[16%]" style="animation-delay: 0s;"></span>
+        <span class="dust-mote w-1 h-1 top-[34%] right-[20%]" style="animation-delay: 2.5s;"></span>
+        <span class="dust-mote w-1.5 h-1.5 bottom-[28%] left-[24%]" style="animation-delay: 4.2s;"></span>
+        <span class="dust-mote w-1 h-1 bottom-[22%] right-[18%]" style="animation-delay: 1.8s;"></span>
+    </div>
+
+    <!-- Top Header & Floating Music Pill -->
+    <header class="w-full max-w-2xl mx-auto px-5 sm:px-6 pt-6 pb-2 flex items-center justify-between gap-3 relative z-30">
+        <div class="flex items-center gap-2 min-w-0">
+            <span class="w-1.5 h-1.5 rounded-full bg-maroon shrink-0"></span>
+            <span id="header-song-title" class="font-serif italic text-sm sm:text-base text-sepia truncate">
+                Last Night on Earth — Green Day
+            </span>
+        </div>
+
+        <!-- Floating Vinyl Music Pill -->
+        <div class="flex items-center gap-2 shrink-0">
+            <button id="btn-music-toggle" type="button" aria-label="Play or mute music"
+                class="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-borderWarm bg-paperSheet/90 hover:bg-paperSheet text-ink text-xs sm:text-sm font-serif transition shadow-sm">
+                <!-- Mini Vinyl Icon -->
+                <span id="vinyl-disc" class="w-4 h-4 rounded-full bg-ink border border-brass/70 flex items-center justify-center relative">
+                    <span class="w-1.5 h-1.5 rounded-full bg-maroon"></span>
+                </span>
+                <span id="music-label">Play Music</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Interactive Container -->
+    <main class="flex-grow flex items-center justify-center px-4 sm:px-6 py-6 sm:py-10 relative z-20">
+
+        <!-- ===============================================================
+             STAGE 1: MINIMALIST VINTAGE STANDING MAILBOX
+             =============================================================== -->
+        <section id="mailbox-view" class="w-full max-w-md mx-auto text-center">
+            <p class="font-serif italic text-sepia text-base sm:text-lg mb-7">
+                A quiet delivery is waiting for you
+            </p>
+
+            <div id="mailbox-trigger" role="button" tabindex="0" aria-label="Tap the mailbox to open your letter"
+                class="mailbox-stage relative w-64 sm:w-72 mx-auto cursor-pointer select-none group focus:outline-none">
+
+                <!-- Classic Standing Vintage Mailbox -->
+                <div class="relative mx-auto w-52 sm:w-56">
+                    
+                    <!-- Red Signal Flag on the Side -->
+                    <div class="mailbox-flag absolute -right-3 top-7 w-3 h-14 bg-maroon rounded-t-sm border border-maroonDark shadow-sm z-10 flex flex-col items-center">
+                        <div class="w-5 h-3.5 bg-maroon border border-maroonDark rounded-r-sm -mr-2.5 mt-0.5"></div>
+                    </div>
+
+                    <!-- Arched Mailbox Body -->
+                    <div class="relative w-full h-36 rounded-t-[56px] rounded-b-xl bg-gradient-to-b from-[#853333] via-[#732929] to-[#561D1D] border-2 border-[#471616] shadow-[0_18px_36px_rgba(43,33,29,0.2)] transition-transform duration-300 group-hover:-translate-y-1 flex flex-col items-center justify-between pt-4 pb-3 px-4">
+                        
+                        <!-- Brass Name Plaque -->
+                        <div class="px-4 py-1 rounded bg-[#F2E7D0] border border-brass shadow-inner max-w-[165px]">
+                            <span id="mailbox-plaque-name" class="block font-display italic text-sm sm:text-base text-ink font-medium tracking-wide truncate">
+                                For Daniella
+                            </span>
+                        </div>
+
+                        <!-- Interior Compartment & Front Hatch Door -->
+                        <div class="relative w-36 h-20 rounded-t-[36px] rounded-b-md bg-[#331010] border border-[#471616] shadow-inner flex items-center justify-center overflow-visible">
+                            
+                            <!-- Cream Envelope Peeking Out -->
+                            <div class="mailbox-envelope-peek relative w-32 h-20 bg-paperSheet border border-borderWarm rounded shadow-md p-2.5 flex flex-col justify-between text-left z-10">
+                                <div class="w-5 h-5 rounded-full bg-maroon mx-auto flex items-center justify-center shadow-sm">
+                                    <span class="font-display italic text-[8px] text-paperSheet">R&D</span>
+                                </div>
+                                <div class="border-t border-borderWarm pt-1 text-center">
+                                    <span id="peek-recipient" class="block font-display italic text-xs text-ink">For Daniella</span>
+                                </div>
+                            </div>
+
+                            <!-- Swinging Front Door -->
+                            <div class="mailbox-door absolute inset-0 rounded-t-[36px] rounded-b-md bg-gradient-to-b from-[#7E2F2F] to-[#5D1F1F] border border-brass/50 flex flex-col items-center justify-between py-2.5 px-3 shadow-md z-20">
+                                <!-- Brass Latch -->
+                                <div class="w-4 h-2 rounded-full bg-gradient-to-r from-[#9E7D43] via-[#DFC48C] to-[#9E7D43] border border-[#471616] shadow-sm"></div>
+                                <span class="font-serif text-[10px] tracking-[0.22em] uppercase text-brass/90">Post</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wooden/Iron Post Stand -->
+                    <div class="w-7 h-24 mx-auto bg-gradient-to-r from-[#3B1717] via-[#542222] to-[#331313] border-x border-[#290E0E] shadow-md"></div>
+                    <!-- Ground Base -->
+                    <div class="w-28 h-3 mx-auto rounded-t-md bg-[#3B1717] border-t border-brass/40 shadow"></div>
+                </div>
+            </div>
+
+            <p class="mt-6 font-serif italic text-sm sm:text-base text-sepia">
+                Tap the mailbox to open your letter
+            </p>
+        </section>
+
+        <!-- ===============================================================
+             STAGE 2: WAX-SEALED CREAM ENVELOPE
+             =============================================================== -->
+        <section id="envelope-view" class="hidden w-full max-w-md mx-auto text-center animate-fade-up">
+            <p class="font-serif italic text-sepia text-base sm:text-lg mb-6">
+                Sealed and addressed to you
+            </p>
+
+            <!-- Cream Envelope -->
+            <div id="envelope-card" class="relative w-full max-w-[360px] h-56 sm:h-60 mx-auto rounded-xl bg-[#EFE6D5] border border-borderWarm shadow-[0_18px_40px_rgba(43,33,29,0.14)] overflow-hidden">
+                
+                <!-- Subtle Vintage Postmark Stamp -->
+                <div class="absolute top-4 right-4 flex items-center gap-1.5 opacity-65 pointer-events-none z-10">
+                    <div class="w-10 h-10 rounded-full border border-sepia/60 flex flex-col items-center justify-center text-[8px] font-serif uppercase tracking-wider text-sepia -rotate-12">
+                        <span>Post</span>
+                        <span>2026</span>
+                    </div>
+                    <div class="w-9 h-11 border border-dashed border-sepia/70 bg-paperSheet/70 p-1 flex items-center justify-center">
+                        <span class="font-display italic text-[10px] text-maroon">LNoE</span>
+                    </div>
+                </div>
+
+                <!-- Envelope Bottom & Side Fold Lines -->
+                <div class="absolute inset-0 pointer-events-none"
+                    style="background: linear-gradient(135deg, rgba(220,208,188,0.45) 0%, transparent 50%), linear-gradient(225deg, rgba(220,208,188,0.45) 0%, transparent 50%);">
+                </div>
+
+                <!-- Top Triangular Flap -->
+                <div class="envelope-flap absolute inset-x-0 top-0 h-full bg-[#E6DAC3] border-b border-borderWarm shadow-sm z-20"></div>
+
+                <!-- Recipient Name on Lower Front -->
+                <div class="absolute inset-x-0 bottom-5 text-center z-10 pointer-events-none px-4">
+                    <span class="block font-serif text-xs uppercase tracking-[0.2em] text-sepia">To</span>
+                    <span id="envelope-recipient" class="font-display italic text-xl sm:text-2xl text-ink">Daniella</span>
+                </div>
+
+                <!-- Interactive Red Wax Seal Button -->
+                <button id="wax-seal-trigger" type="button" aria-label="Tap the wax seal to read"
+                    class="wax-seal-btn absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 w-16 h-16 rounded-full bg-gradient-to-br from-[#8F3333] via-[#7C2D2D] to-[#561C1C] border-2 border-[#A64848]/60 shadow-[0_6px_16px_rgba(43,33,29,0.32)] flex items-center justify-center cursor-pointer hover:scale-105 active:scale-95 focus:outline-none">
+                    <span class="w-12 h-12 rounded-full border border-paperSheet/30 flex items-center justify-center font-display italic text-sm text-paperSheet/95 tracking-wider">
+                        R &amp; D
+                    </span>
+                </button>
+            </div>
+
+            <p class="mt-6 font-serif italic text-sm sm:text-base text-sepia">
+                Tap the wax seal to read
+            </p>
+        </section>
+
+        <!-- ===============================================================
+             STAGE 3: STATIONERY LETTER WITH TAPED POLAROID & TYPEWRITER
+             =============================================================== -->
+        <article id="letter-view" class="hidden w-full max-w-xl mx-auto animate-fade-up">
+            <div class="paper-sheet rounded-2xl border border-borderWarm px-6 py-8 sm:px-12 sm:py-11 relative">
+
+                <!-- Letter Header -->
+                <div class="flex items-center justify-between border-b border-borderWarm/80 pb-4 mb-7">
+                    <div>
+                        <span class="block font-serif text-xs uppercase tracking-[0.2em] text-sepia">Personal Note</span>
+                        <h1 class="font-display italic text-xl sm:text-2xl text-ink mt-0.5">
+                            For <span id="letter-to-heading">Daniella</span>
+                        </h1>
+                    </div>
+                    <span class="font-serif italic text-xs sm:text-sm text-sepia">
+                        Last Night on Earth
+                    </span>
+                </div>
+
+                <!-- Taped Vintage Polaroid Frame -->
+                <figure class="relative max-w-[235px] sm:max-w-[255px] mx-auto mb-8">
+                    <!-- Washi Tape -->
+                    <div class="washi-tape w-20 h-5 mx-auto -mb-2.5 relative z-10 rotate-1"></div>
+
+                    <div class="polaroid-frame p-3 pb-4 rounded-sm border border-borderWarm/90">
+                        <div class="aspect-[4/3] w-full overflow-hidden bg-[#E7DCC9] rounded-[2px] relative">
+                            <img id="letter-photo"
+                                src=""
+                                alt="A little memory"
+                                class="w-full h-full object-cover sepia-[0.14] contrast-[0.97] transition duration-500">
+                        </div>
+                        <figcaption class="mt-2.5 text-center px-0.5">
+                            <span id="photo-caption" class="font-hand text-base sm:text-lg text-sepia block truncate">
+                                a little memory
+                            </span>
+                        </figcaption>
+                    </div>
+                </figure>
+
+                <!-- Self-Typing Letter Body -->
+                <div class="min-h-[215px]">
+                    <div id="typed-letter-container" class="font-body text-[15.5px] sm:text-[16.5px] leading-[1.9] text-ink space-y-4">
+                        <!-- Paragraphs type themselves out here -->
+                    </div>
+
+                    <!-- Instant Reveal Control -->
+                    <div id="skip-typing-wrap" class="mt-4 text-right">
+                        <button id="btn-skip-typing" type="button"
+                            class="font-serif italic text-xs sm:text-sm text-sepia hover:text-maroon transition underline underline-offset-4">
+                            Show full letter
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sender Signature (Fades in once typing completes) -->
+                <div id="letter-signature-wrap" class="opacity-0 transition-opacity duration-700 mt-8 pt-5 border-t border-borderWarm/80 flex items-end justify-between gap-4">
+                    <button id="btn-back-mailbox" type="button"
+                        class="font-serif italic text-sm text-sepia hover:text-ink transition">
+                        ← Back to mailbox
+                    </button>
+
+                    <div class="text-right">
+                        <span id="letter-from" class="font-display italic text-2xl text-maroon">— Riven</span>
+                    </div>
+                </div>
+
+                <!-- Song Lyric Footer Quote -->
+                <div class="mt-7 pt-4 border-t border-borderWarm/50 text-center">
+                    <p class="font-serif italic text-xs sm:text-sm text-sepia/90">
+                        “If I lose everything in the fire, I'm sending all my love to you.”
+                    </p>
+                </div>
+
+            </div>
+        </article>
+
+    </main>
+
+    <!-- Minimal Audio Status Footer -->
+    <footer class="w-full max-w-2xl mx-auto px-6 pb-5 pt-2 text-center relative z-20">
+        <p id="audio-status-text" class="font-serif italic text-xs text-sepia/85">
+            Last Night on Earth — Green Day • Tap the mailbox to start music
+        </p>
+    </footer>
+
+    <!-- Native HTML5 Audio Player (reads last.mp3 in the same folder) -->
+    <audio id="bg-music" src="last.mp3" preload="auto" loop></audio>
+
+    <script>
+        /**
+         * =====================================================================
+         * #gantidisini — CUSTOMIZATION SETTINGS (LETTER, PHOTO & MUSIC)
+         * Edit any of the values below whenever you want to personalize the page:
+         * =====================================================================
+         */
+        const CONFIG = {
+            // #gantidisini: Recipient and sender names
+            recipient: "Daniella",
+            sender: "— Riven",
+
+            // #gantidisini: Exact letter body paragraphs
+            letterBody: [
+                "Hi daniella, it’s riven. kita emang baru kenal, but i hope we get to know each other better seiring berjalannya waktu. semoga kita bisa punya banyak cerita, banyak hal random buat dibahas, and more little moments to remember.",
+                "ini emang nggak seberapa, cuma little something from me buat sekarang. but hopefully, kedepannya aku bisa kasih kamu something way more special, bukan cuma hadiah, tapi juga waktu, effort, dan hal-hal kecil yang bisa bikin kamu seneng.",
+                "i’m really glad we crossed paths, and i hope this is just the beginning of something nice between us."
+            ],
+
+            // #gantidisini: Polaroid photo URL (Winter - aespa autumn sunset candid) & caption
+            photoUrl: "https://www.wassupkorea.com/data/editor/2025/11/02/224052868100_9da5990a348e090d8578c3404d56e0be_1761316986.jpg",
+            photoFallbackUrl: "https://placehold.co/600x450/EFE7D6/6E6058?text=a+little+memory",
+            photoCaption: "a little memory",
+
+            // #gantidisini: Local MP3 file path (place last.mp3 in the same folder as index.html)
+            mp3Url: "last.mp3",
+            songTitle: "Last Night on Earth — Green Day",
+
+            // #gantidisini: Typewriter speed in milliseconds per character (lower = faster)
+            typingSpeedMs: 32
+        };
+
+        /**
+         * =====================================================================
+         * HTML5 AUDIO CONTROLLER (last.mp3)
+         * =====================================================================
+         */
+        const bgMusic = document.getElementById('bg-music');
+        let isMusicPlaying = false;
+        let hasAudioError = false;
+
+        function setMusicUI(labelText, spinning, statusText) {
+            const vinyl = document.getElementById('vinyl-disc');
+            const label = document.getElementById('music-label');
+            const status = document.getElementById('audio-status-text');
+
+            label.textContent = labelText;
+            if (spinning) {
+                vinyl.classList.add('vinyl-spin');
+            } else {
+                vinyl.classList.remove('vinyl-spin');
+            }
+            if (statusText && status) status.textContent = statusText;
+        }
+
+        function startMusic() {
+            if (!bgMusic) return;
+            if (hasAudioError) {
+                setMusicUI('Add last.mp3', false, 'Place last.mp3 in the same folder as index.html to play music');
+                return;
+            }
+
+            bgMusic.muted = false;
+            bgMusic.volume = 0.85;
+            const playPromise = bgMusic.play();
+
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        isMusicPlaying = true;
+                        setMusicUI('Music Playing', true, `Playing: ${CONFIG.songTitle}`);
+                    })
+                    .catch(() => {
+                        // Browser prevented autoplay or file missing
+                        isMusicPlaying = false;
+                        if (bgMusic.error) {
+                            hasAudioError = true;
+                            setMusicUI('Add last.mp3', false, 'Place last.mp3 in the same folder as index.html');
+                        } else {
+                            setMusicUI('Play Music', false, 'Tap Play Music in the top corner to listen');
+                        }
+                    });
+            }
+        }
+
+        function toggleMusic() {
+            if (!bgMusic) return;
+            if (hasAudioError) {
+                // Retry loading in case the user added last.mp3
+                hasAudioError = false;
+                bgMusic.src = CONFIG.mp3Url;
+                bgMusic.load();
+                startMusic();
+                return;
+            }
+
+            if (isMusicPlaying && !bgMusic.paused) {
+                bgMusic.pause();
+                isMusicPlaying = false;
+                setMusicUI('Muted', false, `Paused • ${CONFIG.songTitle}`);
+            } else {
+                startMusic();
+            }
+        }
+
+        bgMusic.addEventListener('error', () => {
+            hasAudioError = true;
+            isMusicPlaying = false;
+            setMusicUI('Add last.mp3', false, 'Place last.mp3 in the same folder as index.html');
+        });
+
+        bgMusic.addEventListener('playing', () => {
+            hasAudioError = false;
+            isMusicPlaying = true;
+            setMusicUI('Music Playing', true, `Playing: ${CONFIG.songTitle}`);
+        });
+
+        /**
+         * =====================================================================
+         * TYPEWRITER LETTER ANIMATION
+         * =====================================================================
+         */
+        let typingTimer = null;
+        let isTypingDone = false;
+
+        function finishTypingImmediately() {
+            if (typingTimer) clearTimeout(typingTimer);
+            isTypingDone = true;
+
+            const container = document.getElementById('typed-letter-container');
+            container.innerHTML = '';
+            CONFIG.letterBody.forEach(text => {
+                const p = document.createElement('p');
+                p.textContent = text;
+                container.appendChild(p);
+            });
+
+            document.getElementById('skip-typing-wrap').classList.add('hidden');
+            document.getElementById('letter-signature-wrap').classList.remove('opacity-0');
+        }
+
+        function startTypewriterEffect() {
+            if (typingTimer) clearTimeout(typingTimer);
+            isTypingDone = false;
+
+            const container = document.getElementById('typed-letter-container');
+            const skipWrap = document.getElementById('skip-typing-wrap');
+            const sigWrap = document.getElementById('letter-signature-wrap');
+
+            container.innerHTML = '';
+            skipWrap.classList.remove('hidden');
+            sigWrap.classList.add('opacity-0');
+
+            let pIndex = 0;
+            let charIndex = 0;
+            let currentP = null;
+
+            function typeNextChar() {
+                if (isTypingDone) return;
+
+                if (pIndex >= CONFIG.letterBody.length) {
+                    if (currentP) currentP.classList.remove('typing-cursor');
+                    isTypingDone = true;
+                    skipWrap.classList.add('hidden');
+                    sigWrap.classList.remove('opacity-0');
+                    return;
+                }
+
+                if (charIndex === 0) {
+                    if (currentP) currentP.classList.remove('typing-cursor');
+                    currentP = document.createElement('p');
+                    currentP.classList.add('typing-cursor');
+                    container.appendChild(currentP);
+                }
+
+                const fullText = CONFIG.letterBody[pIndex];
+                currentP.textContent = fullText.slice(0, charIndex + 1);
+                charIndex++;
+
+                let delay = CONFIG.typingSpeedMs;
+                const typedChar = fullText[charIndex - 1];
+                if (typedChar === '.' || typedChar === ',') delay += 130;
+
+                if (charIndex >= fullText.length) {
+                    pIndex++;
+                    charIndex = 0;
+                    delay += 260;
+                }
+
+                typingTimer = setTimeout(typeNextChar, delay);
+            }
+
+            typeNextChar();
+        }
+
+        /**
+         * =====================================================================
+         * INITIALIZE CONTENT, 3-STAGE FLOW & PHOTO REPLACEMENT
+         * =====================================================================
+         */
+        function initContent() {
+            document.getElementById('mailbox-plaque-name').textContent = `For ${CONFIG.recipient}`;
+            document.getElementById('peek-recipient').textContent = `For ${CONFIG.recipient}`;
+            document.getElementById('envelope-recipient').textContent = CONFIG.recipient;
+            document.getElementById('letter-to-heading').textContent = CONFIG.recipient;
+            document.getElementById('letter-from').textContent = CONFIG.sender;
+            document.getElementById('photo-caption').textContent = CONFIG.photoCaption;
+            document.getElementById('header-song-title').textContent = CONFIG.songTitle;
+            document.getElementById('audio-status-text').textContent = `${CONFIG.songTitle} • Tap the mailbox to start music`;
+
+            bgMusic.src = CONFIG.mp3Url;
+
+            const photoImg = document.getElementById('letter-photo');
+            photoImg.src = CONFIG.photoUrl;
+            photoImg.onerror = function () {
+                this.onerror = null;
+                this.src = CONFIG.photoFallbackUrl;
+            };
+        }
+
+        const mailboxView = document.getElementById('mailbox-view');
+        const mailboxTrigger = document.getElementById('mailbox-trigger');
+        const envelopeView = document.getElementById('envelope-view');
+        const envelopeCard = document.getElementById('envelope-card');
+        const waxSealTrigger = document.getElementById('wax-seal-trigger');
+        const letterView = document.getElementById('letter-view');
+
+        // Stage 1 -> Stage 2: Open Mailbox & start last.mp3 inside the user click gesture
+        function handleOpenMailbox() {
+            mailboxTrigger.classList.add('mailbox-opened');
+            if (!isMusicPlaying) {
+                startMusic();
+            }
+
+            setTimeout(() => {
+                mailboxView.classList.add('hidden');
+                envelopeView.classList.remove('hidden');
+            }, 850);
+        }
+
+        // Stage 2 -> Stage 3: Break Wax Seal & Unfold Letter
+        function handleOpenEnvelope() {
+            envelopeCard.classList.add('envelope-opened');
+            if (!isMusicPlaying) {
+                startMusic();
+            }
+
+            setTimeout(() => {
+                envelopeView.classList.add('hidden');
+                letterView.classList.remove('hidden');
+                startTypewriterEffect();
+            }, 750);
+        }
+
+        // Reset back to Mailbox
+        function handleBackToMailbox() {
+            if (typingTimer) clearTimeout(typingTimer);
+            letterView.classList.add('hidden');
+            envelopeView.classList.add('hidden');
+            mailboxTrigger.classList.remove('mailbox-opened');
+            envelopeCard.classList.remove('envelope-opened');
+            mailboxView.classList.remove('hidden');
+        }
+
+        mailboxTrigger.addEventListener('click', handleOpenMailbox);
+        mailboxTrigger.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleOpenMailbox();
+            }
+        });
+
+        waxSealTrigger.addEventListener('click', handleOpenEnvelope);
+        document.getElementById('btn-skip-typing').addEventListener('click', finishTypingImmediately);
+        document.getElementById('btn-back-mailbox').addEventListener('click', handleBackToMailbox);
+        document.getElementById('btn-music-toggle').addEventListener('click', toggleMusic);
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initContent();
+        });
+    </script>
+</body>
+</html>
